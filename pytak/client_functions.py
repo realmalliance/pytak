@@ -183,6 +183,7 @@ async def protocol_factory(  # NOQA pylint: disable=too-many-locals,too-many-bra
         client_cert = tls_config.get("PYTAK_TLS_CLIENT_CERT")
         client_key = tls_config.get("PYTAK_TLS_CLIENT_KEY")
         client_cafile = tls_config.get("PYTAK_TLS_CLIENT_CAFILE")
+        client_cert_password = tls_config.get("PYTAK_TLS_CLIENT_CERT_PASSWORD")
 
         # Default cipher suite: ALL.
         #  Also available in FIPS: DEFAULT_FIPS_CIPHERS
@@ -205,7 +206,7 @@ async def protocol_factory(  # NOQA pylint: disable=too-many-locals,too-many-bra
         ssl_ctx.verify_mode = ssl.VerifyMode.CERT_REQUIRED
 
         if client_key:
-            ssl_ctx.load_cert_chain(client_cert, keyfile=client_key)
+            ssl_ctx.load_cert_chain(client_cert, keyfile=client_key, password=client_cert_password)
         else:
             ssl_ctx.load_cert_chain(client_cert)
 
